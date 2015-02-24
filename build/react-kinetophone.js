@@ -114,7 +114,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return React.DOM.button(props, text);
 	  },
 
-	  togglePlaying: function() {
+	  togglePlaying: function(e) {
+	    e.preventDefault();
 	    if (this.state.playing) {
 	      this.pause();
 	    } else {
