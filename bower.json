@@ -1,0 +1,22 @@
+{
+  "name": "react-kinetophone",
+  "main": "build/react-kinetophone.min.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/BinaryMuse/react-kinetophone",
+  "authors": [
+    "BinaryMuse <brandon@brandontilley.com>"
+  ],
+  "description": "React-based player for the Kinetophone library",
+  "keywords": [
+    "react",
+    "kinetophone"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "examples",
+    "src",
+    "webpack.config.js",
+    "index.js"
+  ]
+}

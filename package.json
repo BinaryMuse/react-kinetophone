@@ -1,0 +1,18 @@
+{
+  "name": "react-kinetophone",
+  "version": "0.0.1",
+  "description": "React-based player for the Kinetophone library",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "build-min": "webpack -p --output-file react-kinetophone.min.js"
+  },
+  "author": "BinaryMuse",
+  "license": "MIT",
+  "devDependencies": {
+    "kinetophone": "0.0.8",
+    "react": "^0.12.2",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
+  }
+}
