@@ -79,7 +79,26 @@ var ControlBar = ReactKinetophone.ControlBar,
     TimeDisplay = ReactKinetophone.TimeDisplay,
     ImageOutput = ReactKinetophone.ImageOutput,
     AudioOutput = ReactKinetophone.AudioOutput,
-    TextOutput = ReactKinetophone.TextOutput;
+    TextOutput = ReactKinetophone.TextOutput,
+    EventMixin = ReactKinetophone.EventMixin;
+
+var JsonTimingOutput = React.createClass({
+  mixins: [EventMixin],
+
+  getInitialState() {
+    return {
+      timings: []
+    };
+  },
+
+  render() {
+    return <pre>{JSON.stringify(this.state.timings, null, "  ")}</pre>;
+  },
+
+  onKinetophoneTimeUpdate(time) {
+    this.setState({timings: this.props.kinetophone.getTimingsAt(time)});
+  }
+});
 
 var Application = React.createClass({
   render() {
@@ -96,6 +115,7 @@ var Application = React.createClass({
           </div>
           <AudioOutput kinetophone={kinetophone} channel="audio" />
         </div>
+        <JsonTimingOutput kinetophone={kinetophone} />
       </div>
     );
   },
