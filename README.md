@@ -79,9 +79,10 @@ var App = React.createClass({
       <div>
         <div>
           <ReactKinetophone.ControlBar kinetophone={this.props.kinetophone} />
-          <ReactKinetophone.TimeDisplay kinetophone={this.props.kinetophone} format="m:ss" />
+          <ReactKinetophone.TimeDisplay kinetophone={this.props.kinetophone} />
         </div>
-        <ReactKinetophone.ImageOutput kinetophone={this.props.kinetophone} channel="images" />
+        <ReactKinetophone.ImageOutput kinetophone={this.props.kinetophone} channel="images"
+                                      className="images-channel" />
         <ReactKinetophone.AudioOutput kinetophone={this.props.kinetophone} channel="audio" />
       </div>
     );
@@ -92,5 +93,3 @@ React.render(<App kinetophone={kinetophone} />, document.getElementById("app"));
 ```
 
 For more complete examples, check out [the demos on the Kinetophone home page](http://binarymuse.github.io/kinetophone/) and the [associated source code](https://github.com/BinaryMuse/kinetophone/tree/gh-pages).
-
-
