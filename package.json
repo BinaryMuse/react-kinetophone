@@ -10,7 +10,7 @@
   "author": "BinaryMuse",
   "license": "MIT",
   "devDependencies": {
-    "kinetophone": "0.0.8",
+    "kinetophone": "1.0.1",
     "react": "^0.12.2",
     "webpack": "^1.5.3",
     "webpack-dev-server": "^1.7.0"
