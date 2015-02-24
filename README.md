@@ -91,5 +91,3 @@ var App = React.createClass({
 
 React.render(<App kinetophone={kinetophone} />, document.getElementById("app"));
 ```
-
-For more complete examples, check out [the demos on the Kinetophone home page](http://binarymuse.github.io/kinetophone/) and the [associated source code](https://github.com/BinaryMuse/kinetophone/tree/gh-pages).
