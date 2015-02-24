@@ -7,5 +7,8 @@ module.exports = {
   ImageOutput: require("./src/image_output"),
   AudioOutput: require("./src/audio_output"),
   AudioClip: require("./src/audio_clip"),
-  TextOutput: require("./src/text_output")
+  TextOutput: require("./src/text_output"),
+
+  ChannelMixin: require("./src/kinetophone_channel_mixin"),
+  EventMixin: require("./src/kinetophone_event_mixin")
 };
