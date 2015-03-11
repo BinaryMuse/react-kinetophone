@@ -7,7 +7,7 @@
 		exports["ReactKinetophone"] = factory(require("react"));
 	else
 		root["ReactKinetophone"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_9__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_11__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -63,7 +63,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ImageOutput: __webpack_require__(5),
 	  AudioOutput: __webpack_require__(6),
 	  AudioClip: __webpack_require__(7),
-	  TextOutput: __webpack_require__(8)
+	  TextOutput: __webpack_require__(8),
+
+	  ChannelMixin: __webpack_require__(9),
+	  EventMixin: __webpack_require__(10)
 	};
 
 
@@ -71,18 +74,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9),
+	var React = __webpack_require__(11),
 	    el = React.createElement.bind(React);
 
-	var KinetophoneEventMixin = __webpack_require__(10),
-	    PlayPauseButton = __webpack_require__(2),
+	var PlayPauseButton = __webpack_require__(2),
 	    SeekBar = __webpack_require__(3);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneControlBar",
 
 	  render: function() {
-	    return React.DOM.span({},
+	    return React.DOM.span(this.props,
 	      el(PlayPauseButton, {kinetophone: this.props.kinetophone}),
 	      el(SeekBar, {kinetophone: this.props.kinetophone})
 	    );
@@ -94,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(11);
 
 	var KinetophoneEventMixin = __webpack_require__(10);
 
@@ -154,7 +156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(11);
 
 	var KinetophoneEventMixin = __webpack_require__(10);
 
@@ -194,7 +196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(11);
 
 	var KinetophoneEventMixin = __webpack_require__(10);
 
@@ -230,9 +232,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(11);
 
-	var KinetophoneChannelMixin = __webpack_require__(11),
+	var KinetophoneChannelMixin = __webpack_require__(9),
 	    keyOrFn = __webpack_require__(12);
 
 	module.exports = React.createClass({
@@ -269,11 +271,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9),
+	var React = __webpack_require__(11),
 	    el = React.createElement.bind(React);
 
 	var AudioClip = __webpack_require__(7),
-	    KinetophoneChannelMixin = __webpack_require__(11),
+	    KinetophoneChannelMixin = __webpack_require__(9),
 	    KinetophoneEventMixin = __webpack_require__(10),
 	    keyOrFn = __webpack_require__(12);
 
@@ -360,7 +362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(11);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneAudioClip",
@@ -405,10 +407,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(9),
+	var React = __webpack_require__(11),
 	    el = React.createElement.bind(React);
 
-	var KinetophoneChannelMixin = __webpack_require__(11),
+	var KinetophoneChannelMixin = __webpack_require__(9),
 	    keyOrFn = __webpack_require__(12);
 
 	module.exports = React.createClass({
@@ -446,7 +448,33 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
+	module.exports = {
+	  componentDidMount: function() {
+	    this._bindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	  },
+
+	  componentWillUnmount: function() {
+	    this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	  },
+
+	  componentWillReceiveProps: function(props) {
+	    if (props.kinetophone !== this.props.kinetophone || props.channel !== this.props.channel) {
+	      this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	      this._unbindKinetophoneChannelEvents(props.kinetophone, props.channel);
+	    }
+	  },
+
+	  _bindKinetophoneChannelEvents: function(kinetophone, channelName) {
+	    this.onKinetophoneTimingEnter && kinetophone.on("enter:" + channelName, this.onKinetophoneTimingEnter);
+	    this.onKinetophoneTimingExit && kinetophone.on("exit:" + channelName, this.onKinetophoneTimingExit);
+	  },
+
+	  _unbindKinetophoneChannelEvents: function(kinetophone, channelName) {
+	    this.onKinetophoneTimingEnter && kinetophone.off("enter:" + channelName, this.onKinetophoneTimingEnter);
+	    this.onKinetophoneTimingExit && kinetophone.off("exit:" + channelName, this.onKinetophoneTimingExit);
+	  }
+	};
+
 
 /***/ },
 /* 10 */
@@ -492,33 +520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
-	  componentDidMount: function() {
-	    this._bindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	  },
-
-	  componentWillUnmount: function() {
-	    this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	  },
-
-	  componentWillReceiveProps: function(props) {
-	    if (props.kinetophone !== this.props.kinetophone || props.channel !== this.props.channel) {
-	      this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	      this._unbindKinetophoneChannelEvents(props.kinetophone, props.channel);
-	    }
-	  },
-
-	  _bindKinetophoneChannelEvents: function(kinetophone, channelName) {
-	    this.onKinetophoneTimingEnter && kinetophone.on("enter:" + channelName, this.onKinetophoneTimingEnter);
-	    this.onKinetophoneTimingExit && kinetophone.on("exit:" + channelName, this.onKinetophoneTimingExit);
-	  },
-
-	  _unbindKinetophoneChannelEvents: function(kinetophone, channelName) {
-	    this.onKinetophoneTimingEnter && kinetophone.off("enter:" + channelName, this.onKinetophoneTimingEnter);
-	    this.onKinetophoneTimingExit && kinetophone.off("exit:" + channelName, this.onKinetophoneTimingExit);
-	  }
-	};
-
+	module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
 
 /***/ },
 /* 12 */
