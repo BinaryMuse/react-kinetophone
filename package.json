@@ -7,7 +7,7 @@
     "build": "webpack",
     "build-min": "webpack -p --output-file react-kinetophone.min.js"
   },
-  "author": "BinaryMuse",
+  "author": "Michelle Tilley <michelle@michelletilley.net>",
   "license": "MIT",
   "devDependencies": {
     "kinetophone": "1.0.1",
