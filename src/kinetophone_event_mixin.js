@@ -21,6 +21,7 @@ module.exports = {
     this.onKinetophoneSeeking && kinetophone.on("seeking", this.onKinetophoneSeeking);
     this.onKinetophoneSeek && kinetophone.on("seek", this.onKinetophoneSeek);
     this.onKinetophoneEnd && kinetophone.on("end", this.onKinetophoneEnd);
+    this.onKinetophoneRateUpdate && kinetophone.on("rateupdate", this.onKinetophoneRateUpdate);
   },
 
   _unbindKinetophoneEvents: function(kinetophone) {
@@ -30,5 +31,6 @@ module.exports = {
     this.onKinetophoneSeeking && kinetophone.off("seeking", this.onKinetophoneSeeking);
     this.onKinetophoneSeek && kinetophone.off("seek", this.onKinetophoneSeek);
     this.onKinetophoneEnd && kinetophone.off("end", this.onKinetophoneEnd);
+    this.onKinetophoneRateUpdate && kinetophone.off("rateupdate", this.onKinetophoneRateUpdate);
   }
 };

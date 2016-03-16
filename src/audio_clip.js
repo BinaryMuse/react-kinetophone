@@ -25,6 +25,7 @@ module.exports = React.createClass({
     if (this.props.playing !== props.playing) {
       this.audio[props.playing ? "play" : "pause"]();
     }
+    this.audio.playbackRate = this.props.playbackRate;
 
     if (this.props.lastSeek !== props.lastSeek) {
       var start = props.start,
