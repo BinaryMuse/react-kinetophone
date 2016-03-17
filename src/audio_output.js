@@ -7,7 +7,7 @@ var AudioClip = require("./audio_clip"),
     keyOrFn = require("./key_or_fn");
 
 module.exports = React.createClass({
-  displayName: "ReactKinetophoneImageOutput",
+  displayName: "ReactKinetophoneAudioOutput",
   mixins: [KinetophoneChannelMixin, KinetophoneEventMixin],
 
   propTypes: {
