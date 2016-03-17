@@ -1,6 +1,6 @@
 {
   "name": "react-kinetophone",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React-based player for the Kinetophone library",
   "main": "index.js",
   "scripts": {

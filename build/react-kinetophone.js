@@ -7,45 +7,45 @@
 		exports["ReactKinetophone"] = factory(require("react"));
 	else
 		root["ReactKinetophone"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_11__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -56,17 +56,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 	  ControlBar: __webpack_require__(1),
-	  PlayPauseButton: __webpack_require__(2),
-	  SeekBar: __webpack_require__(3),
+	  PlayPauseButton: __webpack_require__(3),
+	  SeekBar: __webpack_require__(5),
 
-	  TimeDisplay: __webpack_require__(4),
-	  ImageOutput: __webpack_require__(5),
-	  AudioOutput: __webpack_require__(6),
-	  AudioClip: __webpack_require__(7),
-	  TextOutput: __webpack_require__(8),
+	  TimeDisplay: __webpack_require__(6),
+	  ImageOutput: __webpack_require__(7),
+	  AudioOutput: __webpack_require__(10),
+	  AudioClip: __webpack_require__(11),
+	  TextOutput: __webpack_require__(12),
 
-	  ChannelMixin: __webpack_require__(9),
-	  EventMixin: __webpack_require__(10)
+	  ChannelMixin: __webpack_require__(8),
+	  EventMixin: __webpack_require__(4)
 	};
 
 
@@ -74,11 +74,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11),
+	var React = __webpack_require__(2),
 	    el = React.createElement.bind(React);
 
-	var PlayPauseButton = __webpack_require__(2),
-	    SeekBar = __webpack_require__(3);
+	var PlayPauseButton = __webpack_require__(3),
+	    SeekBar = __webpack_require__(5);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneControlBar",
@@ -94,11 +94,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11);
+	var React = __webpack_require__(2);
 
-	var KinetophoneEventMixin = __webpack_require__(10);
+	var KinetophoneEventMixin = __webpack_require__(4);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophonePlayPauseButton",
@@ -153,12 +159,54 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 3 */
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  componentDidMount: function() {
+	    this._bindKinetophoneEvents(this.props.kinetophone);
+	  },
+
+	  componentWillUnmount: function() {
+	    this._unbindKinetophoneEvents(this.props.kinetophone);
+	  },
+
+	  componentWillReceiveProps: function(props) {
+	    if (props.kinetophone !== this.props.kinetophone) {
+	      this._unbindKinetophoneEvents(this.props.kinetophone);
+	      this._unbindKinetophoneEvents(props.kinetophone);
+	    }
+	  },
+
+	  _bindKinetophoneEvents: function(kinetophone) {
+	    this.onKinetophonePlay && kinetophone.on("play", this.onKinetophonePlay);
+	    this.onKinetophonePause && kinetophone.on("pause", this.onKinetophonePause);
+	    this.onKinetophoneTimeUpdate && kinetophone.on("timeupdate", this.onKinetophoneTimeUpdate);
+	    this.onKinetophoneSeeking && kinetophone.on("seeking", this.onKinetophoneSeeking);
+	    this.onKinetophoneSeek && kinetophone.on("seek", this.onKinetophoneSeek);
+	    this.onKinetophoneEnd && kinetophone.on("end", this.onKinetophoneEnd);
+	    this.onKinetophoneRateUpdate && kinetophone.on("rateupdate", this.onKinetophoneRateUpdate);
+	  },
+
+	  _unbindKinetophoneEvents: function(kinetophone) {
+	    this.onKinetophonePlay && kinetophone.off("play", this.onKinetophonePlay);
+	    this.onKinetophonePause && kinetophone.off("pause", this.onKinetophonePause);
+	    this.onKinetophoneTimeUpdate && kinetophone.off("timeupdate", this.onKinetophoneTimeUpdate);
+	    this.onKinetophoneSeeking && kinetophone.off("seeking", this.onKinetophoneSeeking);
+	    this.onKinetophoneSeek && kinetophone.off("seek", this.onKinetophoneSeek);
+	    this.onKinetophoneEnd && kinetophone.off("end", this.onKinetophoneEnd);
+	    this.onKinetophoneRateUpdate && kinetophone.off("rateupdate", this.onKinetophoneRateUpdate);
+	  }
+	};
+
+
+/***/ },
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11);
+	var React = __webpack_require__(2);
 
-	var KinetophoneEventMixin = __webpack_require__(10);
+	var KinetophoneEventMixin = __webpack_require__(4);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneControlBar",
@@ -193,12 +241,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11);
+	var React = __webpack_require__(2);
 
-	var KinetophoneEventMixin = __webpack_require__(10);
+	var KinetophoneEventMixin = __webpack_require__(4);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneTimeDisplay",
@@ -229,13 +277,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11);
+	var React = __webpack_require__(2);
 
-	var KinetophoneChannelMixin = __webpack_require__(9),
-	    keyOrFn = __webpack_require__(12);
+	var KinetophoneChannelMixin = __webpack_require__(8),
+	    keyOrFn = __webpack_require__(9);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneImageOutput",
@@ -268,19 +316,64 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  componentDidMount: function() {
+	    this._bindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	  },
+
+	  componentWillUnmount: function() {
+	    this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	  },
+
+	  componentWillReceiveProps: function(props) {
+	    if (props.kinetophone !== this.props.kinetophone || props.channel !== this.props.channel) {
+	      this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
+	      this._unbindKinetophoneChannelEvents(props.kinetophone, props.channel);
+	    }
+	  },
+
+	  _bindKinetophoneChannelEvents: function(kinetophone, channelName) {
+	    this.onKinetophoneTimingEnter && kinetophone.on("enter:" + channelName, this.onKinetophoneTimingEnter);
+	    this.onKinetophoneTimingExit && kinetophone.on("exit:" + channelName, this.onKinetophoneTimingExit);
+	  },
+
+	  _unbindKinetophoneChannelEvents: function(kinetophone, channelName) {
+	    this.onKinetophoneTimingEnter && kinetophone.off("enter:" + channelName, this.onKinetophoneTimingEnter);
+	    this.onKinetophoneTimingExit && kinetophone.off("exit:" + channelName, this.onKinetophoneTimingExit);
+	  }
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	module.exports = function(keyOrFn, timing) {
+	  if (typeof keyOrFn === "function") {
+	    return keyOrFn(timing);
+	  } else {
+	    return timing.data[keyOrFn];
+	  }
+	};
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11),
+	var React = __webpack_require__(2),
 	    el = React.createElement.bind(React);
 
-	var AudioClip = __webpack_require__(7),
-	    KinetophoneChannelMixin = __webpack_require__(9),
-	    KinetophoneEventMixin = __webpack_require__(10),
-	    keyOrFn = __webpack_require__(12);
+	var AudioClip = __webpack_require__(11),
+	    KinetophoneChannelMixin = __webpack_require__(8),
+	    KinetophoneEventMixin = __webpack_require__(4),
+	    keyOrFn = __webpack_require__(9);
 
 	module.exports = React.createClass({
-	  displayName: "ReactKinetophoneImageOutput",
+	  displayName: "ReactKinetophoneAudioOutput",
 	  mixins: [KinetophoneChannelMixin, KinetophoneEventMixin],
 
 	  propTypes: {
@@ -308,7 +401,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      playing: this.props.kinetophone.playing(),
 	      currentAudios: {},
 	      lastSeekToggle: false,
-	      currentTime: this.props.kinetophone.currentTime()
+	      currentTime: this.props.kinetophone.currentTime(),
+	      playbackRate: 1
 	    };
 	  },
 
@@ -322,7 +416,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          src: keyOrFn(this.props.getSrc, audio),
 	          playing: this.state.playing,
 	          lastSeek: this.state.lastSeekToggle,
-	          currentTime: this.state.currentTime
+	          currentTime: this.state.currentTime,
+	          playbackRate: this.state.playbackRate
 	        });
 	      }.bind(this))
 	    );
@@ -354,15 +449,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  onKinetophoneTimeUpdate: function(time) {
 	    this.setState({currentTime: time});
+	  },
+
+	  onKinetophoneRateUpdate: function(rate) {
+	    this.setState({playbackRate: rate});
 	  }
 	});
 
 
 /***/ },
-/* 7 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11);
+	var React = __webpack_require__(2);
 
 	module.exports = React.createClass({
 	  displayName: "ReactKinetophoneAudioClip",
@@ -389,6 +488,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.props.playing !== props.playing) {
 	      this.audio[props.playing ? "play" : "pause"]();
 	    }
+	    this.audio.playbackRate = this.props.playbackRate;
 
 	    if (this.props.lastSeek !== props.lastSeek) {
 	      var start = props.start,
@@ -404,17 +504,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 8 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(11),
+	var React = __webpack_require__(2),
 	    el = React.createElement.bind(React);
 
-	var KinetophoneChannelMixin = __webpack_require__(9),
-	    keyOrFn = __webpack_require__(12);
+	var KinetophoneChannelMixin = __webpack_require__(8),
+	    keyOrFn = __webpack_require__(9);
 
 	module.exports = React.createClass({
-	  displayName: "ReactKinetophoneImageOutput",
+	  displayName: "ReactKinetophoneTextOutput",
 	  mixins: [KinetophoneChannelMixin],
 
 	  propTypes: {
@@ -444,97 +544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  componentDidMount: function() {
-	    this._bindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	  },
-
-	  componentWillUnmount: function() {
-	    this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	  },
-
-	  componentWillReceiveProps: function(props) {
-	    if (props.kinetophone !== this.props.kinetophone || props.channel !== this.props.channel) {
-	      this._unbindKinetophoneChannelEvents(this.props.kinetophone, this.props.channel);
-	      this._unbindKinetophoneChannelEvents(props.kinetophone, props.channel);
-	    }
-	  },
-
-	  _bindKinetophoneChannelEvents: function(kinetophone, channelName) {
-	    this.onKinetophoneTimingEnter && kinetophone.on("enter:" + channelName, this.onKinetophoneTimingEnter);
-	    this.onKinetophoneTimingExit && kinetophone.on("exit:" + channelName, this.onKinetophoneTimingExit);
-	  },
-
-	  _unbindKinetophoneChannelEvents: function(kinetophone, channelName) {
-	    this.onKinetophoneTimingEnter && kinetophone.off("enter:" + channelName, this.onKinetophoneTimingEnter);
-	    this.onKinetophoneTimingExit && kinetophone.off("exit:" + channelName, this.onKinetophoneTimingExit);
-	  }
-	};
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = {
-	  componentDidMount: function() {
-	    this._bindKinetophoneEvents(this.props.kinetophone);
-	  },
-
-	  componentWillUnmount: function() {
-	    this._unbindKinetophoneEvents(this.props.kinetophone);
-	  },
-
-	  componentWillReceiveProps: function(props) {
-	    if (props.kinetophone !== this.props.kinetophone) {
-	      this._unbindKinetophoneEvents(this.props.kinetophone);
-	      this._unbindKinetophoneEvents(props.kinetophone);
-	    }
-	  },
-
-	  _bindKinetophoneEvents: function(kinetophone) {
-	    this.onKinetophonePlay && kinetophone.on("play", this.onKinetophonePlay);
-	    this.onKinetophonePause && kinetophone.on("pause", this.onKinetophonePause);
-	    this.onKinetophoneTimeUpdate && kinetophone.on("timeupdate", this.onKinetophoneTimeUpdate);
-	    this.onKinetophoneSeeking && kinetophone.on("seeking", this.onKinetophoneSeeking);
-	    this.onKinetophoneSeek && kinetophone.on("seek", this.onKinetophoneSeek);
-	    this.onKinetophoneEnd && kinetophone.on("end", this.onKinetophoneEnd);
-	  },
-
-	  _unbindKinetophoneEvents: function(kinetophone) {
-	    this.onKinetophonePlay && kinetophone.off("play", this.onKinetophonePlay);
-	    this.onKinetophonePause && kinetophone.off("pause", this.onKinetophonePause);
-	    this.onKinetophoneTimeUpdate && kinetophone.off("timeupdate", this.onKinetophoneTimeUpdate);
-	    this.onKinetophoneSeeking && kinetophone.off("seeking", this.onKinetophoneSeeking);
-	    this.onKinetophoneSeek && kinetophone.off("seek", this.onKinetophoneSeek);
-	    this.onKinetophoneEnd && kinetophone.off("end", this.onKinetophoneEnd);
-	  }
-	};
-
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_11__;
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(keyOrFn, timing) {
-	  if (typeof keyOrFn === "function") {
-	    return keyOrFn(timing);
-	  } else {
-	    return timing.data[keyOrFn];
-	  }
-	};
-
-
 /***/ }
 /******/ ])
 });
+;
