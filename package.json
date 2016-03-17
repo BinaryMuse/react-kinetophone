@@ -10,7 +10,7 @@
   "author": "Michelle Tilley <michelle@michelletilley.net>",
   "license": "MIT",
   "devDependencies": {
-    "kinetophone": "1.0.1",
+    "kinetophone": "1.2.0",
     "react": "^0.12.2",
     "webpack": "^1.5.3",
     "webpack-dev-server": "^1.7.0"
