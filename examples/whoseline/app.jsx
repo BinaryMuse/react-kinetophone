@@ -105,13 +105,21 @@ var Application = React.createClass({
     return (
       <div>
         <PlayPauseButton className="pure-button pure-button-primary"
-                         style={{width: 75}}
-                         kinetophone={kinetophone} />
+          style={{width: 75}}
+          kinetophone={kinetophone} />
         <SeekBar style={{width: 425, margin: "0 10px"}} kinetophone={kinetophone} />
         <TimeDisplay kinetophone={kinetophone} />
         <div>
           <div style={{padding: "10px 0"}}>
             <ImageOutput kinetophone={kinetophone} channel="frame" />
+          </div>
+          <div>
+            <select defaultValue={1} onChange={this.onChangeRate}>
+              <option value={0.5}>50%</option>
+              <option value={1}>100%</option>
+              <option value={1.5}>150%</option>
+              <option value={2}>200%</option>
+            </select>
           </div>
           <AudioOutput kinetophone={kinetophone} channel="audio" />
         </div>
@@ -122,6 +130,11 @@ var Application = React.createClass({
 
   getAudio: function(timing) {
     return timing.data.audio;
+  },
+
+  onChangeRate: function(evt) {
+    var newRate = parseFloat(evt.target.value);
+    kinetophone.playbackRate(newRate);
   }
 });
 
