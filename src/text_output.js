@@ -5,7 +5,7 @@ var KinetophoneChannelMixin = require("./kinetophone_channel_mixin"),
     keyOrFn = require("./key_or_fn");
 
 module.exports = React.createClass({
-  displayName: "ReactKinetophoneImageOutput",
+  displayName: "ReactKinetophoneTextOutput",
   mixins: [KinetophoneChannelMixin],
 
   propTypes: {

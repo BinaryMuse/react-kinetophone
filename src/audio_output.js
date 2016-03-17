@@ -7,7 +7,7 @@ var AudioClip = require("./audio_clip"),
     keyOrFn = require("./key_or_fn");
 
 module.exports = React.createClass({
-  displayName: "ReactKinetophoneImageOutput",
+  displayName: "ReactKinetophoneAudioOutput",
   mixins: [KinetophoneChannelMixin, KinetophoneEventMixin],
 
   propTypes: {
@@ -35,7 +35,8 @@ module.exports = React.createClass({
       playing: this.props.kinetophone.playing(),
       currentAudios: {},
       lastSeekToggle: false,
-      currentTime: this.props.kinetophone.currentTime()
+      currentTime: this.props.kinetophone.currentTime(),
+      playbackRate: 1
     };
   },
 
@@ -49,7 +50,8 @@ module.exports = React.createClass({
           src: keyOrFn(this.props.getSrc, audio),
           playing: this.state.playing,
           lastSeek: this.state.lastSeekToggle,
-          currentTime: this.state.currentTime
+          currentTime: this.state.currentTime,
+          playbackRate: this.state.playbackRate
         });
       }.bind(this))
     );
@@ -81,5 +83,9 @@ module.exports = React.createClass({
 
   onKinetophoneTimeUpdate: function(time) {
     this.setState({currentTime: time});
+  },
+
+  onKinetophoneRateUpdate: function(rate) {
+    this.setState({playbackRate: rate});
   }
 });
